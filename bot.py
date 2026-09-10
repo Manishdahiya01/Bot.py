@@ -1,6 +1,14 @@
 import os
 import re
 import asyncio
+
+# Fix Python 3.10+ / 3.14+ RuntimeError: There is no current event loop
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -182,5 +190,6 @@ async def search_handler(client, message):
     # Auto-delete both user request and bot reply after 1 minute (60 seconds)
     asyncio.create_task(auto_delete_messages([message, reply_msg], delay=AUTO_DELETE_SECONDS))
 
-print("Bot is ready and running...")
-app.run()
+if __name__ == "__main__":
+    print("Bot is ready and running...")
+    app.run()
