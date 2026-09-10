@@ -1,0 +1,19 @@
+[Unit]
+Description=Advanced Movie Bot Python Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/moviebot
+Environment="API_ID=123456"
+Environment="API_HASH=your_api_hash"
+Environment="BOT_TOKEN=8906094926:AAHYrv9lJgYcSxn6vXXcqo9b_60HQVgDUTk"
+Environment="DATABASE_URI=mongodb+srv://admin:pass@cluster0.mongodb.net/?retryWrites=true&w=majority"
+Environment="AUTO_DELETE_SECONDS=60"
+ExecStart=/usr/bin/python3 bot.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
